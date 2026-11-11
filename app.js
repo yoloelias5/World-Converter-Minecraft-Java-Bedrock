@@ -11,6 +11,8 @@
   const progressText = document.getElementById("progressText");
   const progressPercent = document.getElementById("progressPercent");
   const progressFill = document.getElementById("progressFill");
+  const reportPanel = document.getElementById("reportPanel");
+  const reportContent = document.getElementById("reportContent");
   let selectedFile = null;
 
   const formatBytes = (bytes) => bytes < 1024 * 1024
@@ -42,6 +44,8 @@
     dropzone.hidden = false;
     convertButton.disabled = true;
     progressWrap.hidden = true;
+    reportPanel.hidden = true;
+    reportContent.textContent = "";
   }
   input.addEventListener("change", () => chooseFile(input.files[0]));
   document.getElementById("removeFile").addEventListener("click", clearFile);
@@ -99,7 +103,20 @@
         progressPercent.textContent = "100%";
         progressFill.style.width = "100%";
         progressText.textContent = "Conversion complete";
-        setStatus("Your Bedrock world download is ready. Import the .mcworld file into Minecraft.", "success");
+        const reportHeader = request.getResponseHeader("X-WorldBridge-Report");
+        if (reportHeader) {
+          try {
+            const report = JSON.parse(reportHeader);
+            reportContent.textContent = JSON.stringify(report, null, 2);
+          } catch {
+            reportContent.textContent = reportHeader;
+          }
+          reportPanel.hidden = false;
+        } else {
+          reportContent.textContent = "The converter did not return a report. The world file was still created; check it in Minecraft and keep your Java backup.";
+          reportPanel.hidden = false;
+        }
+        setStatus("Your Bedrock world download is ready. Import the .mcworld file into Minecraft. Review the conversion report below for anything that may not have transferred.", "success");
       } else {
         request.response.text().then(text => {
           let message = "Conversion failed. Please check that this ZIP contains a valid Java world.";
