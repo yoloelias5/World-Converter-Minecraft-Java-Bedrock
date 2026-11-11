@@ -25,6 +25,7 @@ app.add_middleware(
     allow_credentials=False,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
+    expose_headers=["X-WorldBridge-Report"],
 )
 
 
@@ -118,7 +119,7 @@ async def convert_java_to_bedrock(world: UploadFile = File(...)):
         if report_file.is_file():
             try:
                 report = json.loads(report_file.read_text(encoding="utf-8"))
-                report_summary = json.dumps(report, separators=(",", ":"))[:1500]
+                report_summary = json.dumps(report, separators=(",", ":"))[:6000]
             except (OSError, json.JSONDecodeError):
                 pass
 
