@@ -22,4 +22,4 @@ RUN pip3 install --break-system-packages --no-cache-dir -r requirements.txt
 COPY main.py .
 ENV BRIDGER_BIN=/usr/local/bin/bridger
 EXPOSE 8000
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
