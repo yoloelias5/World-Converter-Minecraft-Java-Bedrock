@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10131b">
+  <meta name="description" content="Convert Minecraft Java worlds into Bedrock .mcworld files.">
+  <title>WorldBridge — Java to Bedrock</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-icon">W</span><span>World<span class="brand-accent">Bridge</span></span></a>
+    <span class="edition-pill"><i></i> JAVA → BEDROCK</span>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="eyebrow"><span class="spark">✦</span> WORLD CONVERTER</div>
+      <h1>Your world.<br><span class="gradient-text">A new edition.</span></h1>
+      <p class="hero-copy">Bring your Minecraft Java world to Bedrock. Upload your world, let the converter do its work, and download an import-ready file.</p>
+    </section>
+
+    <section class="converter-card" aria-label="World conversion">
+      <div class="card-top"><div><span class="step-label">01 / UPLOAD</span><h2>Select your Java world</h2></div><span class="file-badge">.ZIP</span></div>
+      <label class="dropzone" id="dropzone" for="worldFile">
+        <input id="worldFile" type="file" accept=".zip,application/zip">
+        <span class="upload-icon">↑</span>
+        <strong id="dropTitle">Drop your world ZIP here</strong>
+        <span id="dropHint">or tap to browse files</span>
+        <span class="browse-button">Choose world</span>
+      </label>
+      <div class="file-row" id="fileRow" hidden><span class="file-icon">▤</span><span class="file-name" id="fileName"></span><span class="file-size" id="fileSize"></span><button class="remove-file" id="removeFile" type="button" aria-label="Remove file">×</button></div>
+      <div class="options">
+        <div><span class="option-title">OUTPUT EDITION</span><strong>Bedrock Edition</strong></div>
+        <div><span class="option-title">OUTPUT FORMAT</span><strong>.mcworld</strong></div>
+        <div><span class="option-title">CONVERSION ENGINE</span><strong>Bridger CLI</strong></div>
+      </div>
+      <button class="convert-button" id="convertButton" disabled><span>Convert world</span><span>↗</span></button>
+      <div class="progress-wrap" id="progressWrap" hidden><div class="progress-head"><span id="progressText">Uploading world…</span><span id="progressPercent">0%</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+      <div class="status" id="status" role="status" aria-live="polite">Checking converter connection…</div>
+    </section>
+
+    <section class="info-grid">
+      <article class="info-card"><span class="info-number">01</span><h3>Upload</h3><p>Zip your Java world folder. Keep <code>level.dat</code> and the <code>region</code> folder inside.</p></article>
+      <article class="info-card"><span class="info-number">02</span><h3>Convert</h3><p>Bridger translates supported world data and creates a Bedrock world.</p></article>
+      <article class="info-card"><span class="info-number">03</span><h3>Import</h3><p>Open the downloaded <code>.mcworld</code> file with Minecraft Bedrock.</p></article>
+    </section>
+
+    <aside class="notice"><span>ⓘ</span><p><strong>Good to know</strong> Some edition-specific content may not have an equivalent. The converter creates a report for items that could not be transferred exactly. Keep a backup of your original world.</p></aside>
+  </main>
+  <footer><span>WorldBridge · Community project</span><span>Not affiliated with Mojang or Microsoft.</span></footer>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
