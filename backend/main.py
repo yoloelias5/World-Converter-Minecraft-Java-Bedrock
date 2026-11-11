@@ -43,12 +43,17 @@ def find_java_world(root: Path) -> Path:
 def safe_extract(archive: Path, destination: Path) -> None:
     root = destination.resolve()
     with zipfile.ZipFile(archive) as zf:
-        for item in zf.infolist():
+        entries = zf.infolist()
+        if len(entries) > 20000:
+            raise HTTPException(status_code=413, detail="The ZIP contains too many files.")
+        expanded_size = 0
+        for item in entries:
             target = (destination / item.filename).resolve()
             if target != root and root not in target.parents:
                 raise HTTPException(status_code=400, detail="The ZIP contains an unsafe file path.")
-            if item.file_size > MAX_UPLOAD_BYTES:
-                raise HTTPException(status_code=413, detail="A file inside the ZIP is too large.")
+            expanded_size += item.file_size
+            if expanded_size > MAX_UPLOAD_BYTES:
+                raise HTTPException(status_code=413, detail="The extracted world exceeds the 512 MB limit.")
         zf.extractall(destination)
 
 
