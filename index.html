@@ -39,6 +39,11 @@
       <button class="convert-button" id="convertButton" disabled><span>Convert world</span><span>↗</span></button>
       <div class="progress-wrap" id="progressWrap" hidden><div class="progress-head"><span id="progressText">Uploading world…</span><span id="progressPercent">0%</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
       <div class="status" id="status" role="status" aria-live="polite">Checking converter connection…</div>
+      <section class="report-panel" id="reportPanel" hidden aria-live="polite">
+        <div class="report-heading"><span class="step-label">CONVERSION DETAILS</span><strong>World conversion report</strong></div>
+        <p>Review this report for unsupported or skipped data. A successful conversion does not guarantee every Java feature has an exact Bedrock equivalent.</p>
+        <pre id="reportContent"></pre>
+      </section>
     </section>
 
     <section class="info-grid">
